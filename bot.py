@@ -216,12 +216,12 @@ def parse_reply(text):
     text = text.strip()
     text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text)
     try:
-        data = json.loads(text)
+        data = json.loads(text, strict=False)
     except json.JSONDecodeError:
         start, end = text.find("{"), text.rfind("}")
         if start == -1 or end <= start:
             raise ValueError("AI reply was not JSON")
-        data = json.loads(text[start : end + 1])
+        data = json.loads(text[start : end + 1], strict=False)
     if isinstance(data, list) and data:
         data = data[0]
     topic = str(data.get("topic", "")).strip()

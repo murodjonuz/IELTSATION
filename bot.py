@@ -46,7 +46,7 @@ def log(msg):
     print(msg, flush=True)
 
 
-def post_json(url, payload, headers=None, label="request", timeout=60):
+def post_json(url, payload, headers=None, label="request", timeout=45):
     """POST JSON, return parsed JSON. Errors never include the URL (it may hold a token)."""
     req = urllib.request.Request(
         url,
@@ -139,20 +139,14 @@ def ask_ai(ai, key, system, prompt):
     models = ai["model"] if isinstance(ai["model"], list) else [ai["model"]]
     last = None
     for model in models:
-        for wait in (0, 20):
-            if wait:
-                time.sleep(wait)
-            try:
-                return fn(ai, key, system, prompt, model)
-            except RuntimeError as e:
-                last = e
-                status = getattr(e, "status", None)
-                log(f"  ! {e}")
-                if status in (401, 403):
-                    raise  # bad key: no point trying further
-                if status in (400, 404):
-                    break  # model name problem: try the next model
-                # 429 / 5xx / network: retry once, then next model
+        try:
+            return fn(ai, key, system, prompt, model)
+        except RuntimeError as e:
+            last = e
+            log(f"  ! {str(e).splitlines()[0]}")
+            if getattr(e, "status", None) in (401, 403):
+                raise  # bad key: no point trying further
+            # retired name (400/404), busy (429/5xx) or timeout: try the next model
     raise last
 
 
@@ -371,6 +365,12 @@ def main():
             topic, post, tags = parse_reply(ask_ai(cfg["ai"], ai_key, system, prompt))
         except (ValueError, KeyError, IndexError, json.JSONDecodeError) as e:
             log(f"  ! unusable reply: {e}")
+            continue
+        except RuntimeError as e:
+            if getattr(e, "status", None) in (401, 403):
+                raise
+            log("  ! every model is busy right now - waiting 30s before the next attempt")
+            time.sleep(30)
             continue
 
         repeat = find_repeat(topic, all_topics + rejected, threshold)

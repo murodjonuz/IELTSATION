@@ -1,0 +1,49 @@
+name: Daily IELTSATION post
+
+on:
+  schedule:
+    # GitHub uses UTC. Tashkent is UTC+5, so 03:55 UTC = 08:55 in Tashkent.
+    # To change the time: subtract 5 hours from your Tashkent time.
+    # Example: 20:00 Tashkent -> "0 15 * * *"
+    - cron: "55 3 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Preview only (prints the post in the log, does not publish)"
+        type: boolean
+        default: false
+      force:
+        description: "Publish even if a post already went out today"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-post
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate and publish
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          AI_API_KEY: ${{ secrets.AI_API_KEY }}
+        run: >
+          python3 bot.py
+          ${{ inputs.dry_run && '--dry-run' || '' }}
+          ${{ inputs.force && '--force' || '' }}
+
+      - name: Remember what was posted
+        run: |
+          git config user.name "ieltsation-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add history.json
+          git diff --cached --quiet || (git commit -m "Posted $(date -u +%F)" && git push)

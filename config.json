@@ -1,0 +1,68 @@
+{
+  "channel_name": "IELTSATION",
+  "audience": "IELTS candidates and English learners in Uzbekistan, mostly teenagers and young adults at B1-C1 level aiming for band 6.5-8.",
+  "utc_offset_hours": 5,
+  "signature": "",
+
+  "ai": {
+    "provider": "gemini",
+    "model": ["gemini-3.8-flash", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-flash-latest"],
+    "base_url": ""
+  },
+
+  "style": {
+    "voice": "A friendly, encouraging IELTS teacher talking to students. Clear and practical, short sentences, British spelling, a little humour, no hype and no clickbait.",
+    "min_chars": 600,
+    "max_chars": 1200,
+    "translation_language": "",
+    "extra_rules": [],
+    "example_posts": []
+  },
+
+  "repeat_similarity_threshold": 0.8,
+
+  "schedule": {
+    "monday": {
+      "category": "ielts_vocabulary",
+      "title": "IELTS Vocabulary",
+      "brief": "Teach 5-6 band 6.5-7.5 words or collocations on ONE common IELTS topic (e.g. environment, education, health, technology, work, cities, crime, media, travel, globalisation). For each: the item in bold, a brief meaning, and one example sentence that would fit Writing Task 2 or Speaking Part 3. Name the topic and the exact items in the topic label.",
+      "hashtags": ["#IELTS", "#IELTSVocabulary"]
+    },
+    "tuesday": {
+      "category": "grammar_tips",
+      "title": "Grammar Tips",
+      "brief": "Explain ONE grammar point that improves the Grammatical Range and Accuracy score (e.g. a conditional type, relative clauses, passive, inversion, articles, a tense contrast, cleft sentences, participle clauses). Give the rule in one or two lines, 2-3 examples, one wrong vs right contrast (use the cross and tick emojis), and where to use it in IELTS Writing or Speaking.",
+      "hashtags": ["#IELTS", "#GrammarTips"]
+    },
+    "wednesday": {
+      "category": "ielts_speaking",
+      "title": "IELTS Speaking",
+      "brief": "Rotate between Part 1, Part 2 and Part 3. Give one realistic exam question (or cue card), a short band 7+ model answer, 3-4 useful phrases taken from it in bold, and one strategy tip (fluency, extending answers, paraphrasing, fillers, pronunciation). State the part and the question in the topic label.",
+      "hashtags": ["#IELTS", "#IELTSSpeaking"]
+    },
+    "thursday": {
+      "category": "common_mistakes",
+      "title": "Common English Mistakes",
+      "brief": "Show 3-4 mistakes learners often make, ideally ones typical for Uzbek and Russian speakers (prepositions, articles, word order, false friends, countable/uncountable, confusing word pairs). For each: the wrong sentence with a cross emoji, the correct one with a tick emoji, and a one-line reason. List the exact mistakes in the topic label.",
+      "hashtags": ["#EnglishMistakes", "#LearnEnglish"]
+    },
+    "friday": {
+      "category": "advanced_vocabulary",
+      "title": "Advanced Vocabulary",
+      "brief": "Teach 4-5 C1-C2 items: sophisticated alternatives to overused words (very important, good, bad, a lot), idiomatic expressions, or precise academic words. For each: the item in bold, meaning, register note (formal / informal / academic) where useful, and one natural example. Must not reuse Monday vocabulary. Name the exact items in the topic label.",
+      "hashtags": ["#AdvancedVocabulary", "#IELTSBand8"]
+    },
+    "saturday": {
+      "category": "ielts_reading",
+      "title": "IELTS Reading Tips",
+      "brief": "Give ONE practical strategy for ONE thing: a question type (True/False/Not Given, Yes/No/Not Given, matching headings, matching information, sentence or summary completion, multiple choice, short answers) or a skill (skimming, scanning, time management, paraphrase spotting, dealing with unknown words). Include numbered steps, the most common trap, and a tiny worked example where possible.",
+      "hashtags": ["#IELTS", "#IELTSReading"]
+    },
+    "sunday": {
+      "category": "english_facts",
+      "title": "Interesting English Facts",
+      "brief": "A light, fun Sunday post: ONE surprising and well-documented fact about English (word origins, odd spellings, the history of the language, numbers about English, unusual words, British vs American differences). Explain why it is so and add a quick takeaway for learners. Only use facts that are widely documented in dictionaries or linguistics references; never popular myths.",
+      "hashtags": ["#EnglishFacts", "#FunEnglish"]
+    }
+  }
+}

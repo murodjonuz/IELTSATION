@@ -2,71 +2,101 @@
   "channel_name": "IELTSATION",
   "audience": "IELTS candidates and English learners in Uzbekistan, mostly teenagers and young adults at B1-C1 level aiming for band 6.5-8.",
   "utc_offset_hours": 5,
-  "join_text": "👉 Join IELTSATION:",
-  "join_link": "",
-
+  "footer": "@ieltsation",
+  "already_published_topics": [
+    "scarce"
+  ],
   "ai": {
     "provider": "gemini",
-    "model": ["gemini-3.8-flash", "gemini-3.6-flash", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-flash-latest"],
+    "model": [
+      "gemini-3.8-flash",
+      "gemini-3.6-flash",
+      "gemini-3.5-flash-lite",
+      "gemini-3.1-flash-lite",
+      "gemini-flash-latest"
+    ],
     "base_url": ""
   },
-
   "style": {
-    "voice": "A friendly, encouraging IELTS teacher talking to students. Clear and practical, short sentences, British spelling, a little humour, no hype and no clickbait.",
-    "min_chars": 600,
-    "max_chars": 1200,
-    "translation_language": "",
+    "voice": "A clear, practical IELTS teacher. Very short lines, simple explanations, no long paragraphs, no hype. British spelling.",
+    "min_chars": 500,
+    "max_chars": 1100,
+    "translation_language": "Uzbek in Cyrillic script",
     "extra_rules": [
+      "Layout must copy the example post exactly: a title line, then short labelled sections. Each section starts with ONE emoji and a short bold label on its own line, followed by very short lines. Leave a blank line between sections. No long paragraphs, no bullet symbols.",
+      "Always include these sections near the end, in this order: the Uzbek section, '📝 IELTS tip' (one sentence), '❓ Mini task' (one question or tiny task ending with 👇).",
+      "Do not write the channel name or @handle; it is added automatically.",
       "Never promise to check, correct or reply to comments. You may invite students to write a sentence, but do not say anyone will check it.",
       "Avoid cliche 'IELTS word list' vocabulary that every prep channel already teaches, such as: paramount, detrimental, conducive, plethora, myriad, crucial, pivotal, ubiquitous, delve, meticulous, beneficial, significant, nowadays, a double-edged sword, a piece of cake, in a nutshell, every coin has two sides. Choose fresher items that fluent writers and speakers really use: precise verbs, natural collocations, and current expressions from quality journalism."
     ],
-    "example_posts": []
+    "example_posts": [
+      "📘 <b>Word of the Day: SCARCE</b>\n\n🔤 <b>Part of speech</b>\nAdjective\n\n📖 <b>Meaning</b>\nScarce = rare, limited, or not enough in quantity, especially when something is hard to find.\n\n🧠 <b>In simple words:</b>\n👉 there is very little of it.\n\n🗣 <b>Examples</b>\n\nClean drinking water is scarce in some regions.\n\nJobs were scarce during the economic crisis.\n\nFood became scarce after the disaster.\n\n🧩 <b>Common collocations</b>\n\nscarce resources\n\nscarce supply\n\nscarce opportunities\n\nin scarce supply\n\n💡 <b>Register</b>\n✔️ Neutral to formal\n✔️ Common in news, academic writing, and IELTS answers\n\n🇺🇿 <b>Uzbek</b>\nscarce — камёб, етарли бўлмаган, танқис\n\n📝 <b>IELTS tip</b>\nUse scarce instead of not enough to sound more academic and precise.\n\n❓ <b>Mini task</b>\nWhat resource is becoming scarce in the modern world? 👇"
+    ]
   },
-
   "repeat_similarity_threshold": 0.8,
-
   "schedule": {
     "monday": {
       "category": "ielts_vocabulary",
       "title": "IELTS Vocabulary",
-      "brief": "Teach 5-6 band 6.5-7.5 words or collocations on ONE common IELTS topic (e.g. environment, education, health, technology, work, cities, crime, media, travel, globalisation). For each: the item in bold, a brief meaning, and one example sentence that would fit Writing Task 2 or Speaking Part 3. Name the topic and the exact items in the topic label.",
-      "hashtags": ["#IELTS", "#IELTSVocabulary"]
+      "brief": "Word of the Day, in EXACTLY the format and section order of the example post (Part of speech, Meaning, In simple words, Examples x3, Common collocations x3-4, Register, Uzbek, IELTS tip, Mini task). Title: 'Word of the Day: WORD' with the word in capitals. Choose ONE useful band 6.5-7.5 word for common IELTS topics (environment, education, health, technology, work, cities, society). The topic label must be ONLY the word itself.",
+      "hashtags": [
+        "#IELTS",
+        "#IELTSVocabulary"
+      ]
     },
     "tuesday": {
       "category": "grammar_tips",
       "title": "Grammar Tips",
-      "brief": "Explain ONE grammar point that improves the Grammatical Range and Accuracy score (e.g. a conditional type, relative clauses, passive, inversion, articles, a tense contrast, cleft sentences, participle clauses). Give the rule in one or two lines, 2-3 examples, one wrong vs right contrast (use the cross and tick emojis), and where to use it in IELTS Writing or Speaking.",
-      "hashtags": ["#IELTS", "#GrammarTips"]
+      "brief": "ONE grammar point that improves the Grammatical Range and Accuracy score (e.g. a conditional type, relative clauses, passive, inversion, articles, a tense contrast, cleft sentences, participle clauses). Title: 'Grammar Tip: NAME'. Sections: 📖 Rule (one or two lines), 🧠 In simple words, 🗣 Examples (3), ⚠️ Common mistake (one ❌ wrong line and one ✅ correct line), then Uzbek (translate the key rule in one line), IELTS tip, Mini task.",
+      "hashtags": [
+        "#IELTS",
+        "#GrammarTips"
+      ]
     },
     "wednesday": {
       "category": "ielts_speaking",
       "title": "IELTS Speaking",
-      "brief": "Rotate between Part 1, Part 2 and Part 3. Give one realistic exam question (or cue card), a short band 7+ model answer, 3-4 useful phrases taken from it in bold, and one strategy tip (fluency, extending answers, paraphrasing, fillers, pronunciation). State the part and the question in the topic label.",
-      "hashtags": ["#IELTS", "#IELTSSpeaking"]
+      "brief": "Rotate between Part 1, Part 2 and Part 3. Title: 'IELTS Speaking: Part N'. Sections: ❓ Question (one realistic exam question or cue card), 🗣 Sample answer (band 7+, 3-5 short sentences), 🧩 Useful phrases (3-4 taken from the answer), 💡 Strategy (one line), then Uzbek (translate the useful phrases), IELTS tip, Mini task. State the part and the question in the topic label.",
+      "hashtags": [
+        "#IELTS",
+        "#IELTSSpeaking"
+      ]
     },
     "thursday": {
       "category": "common_mistakes",
       "title": "Common English Mistakes",
-      "brief": "Show 3-4 mistakes learners often make, ideally ones typical for Uzbek and Russian speakers (prepositions, articles, word order, false friends, countable/uncountable, confusing word pairs). For each: the wrong sentence with a cross emoji, the correct one with a tick emoji, and a one-line reason. List the exact mistakes in the topic label.",
-      "hashtags": ["#EnglishMistakes", "#LearnEnglish"]
+      "brief": "ONE common mistake per post, ideally typical for Uzbek and Russian speakers (prepositions, articles, word order, false friends, countable/uncountable, confusing word pairs). Title: 'Common Mistake: SHORT NAME'. Sections: ❌ Wrong (one sentence), ✅ Correct (one sentence), 📖 Why (one or two lines), 🗣 More examples (3 correct sentences), then Uzbek (explain why learners make it, one line), IELTS tip, Mini task. Name the exact mistake in the topic label.",
+      "hashtags": [
+        "#EnglishMistakes",
+        "#LearnEnglish"
+      ]
     },
     "friday": {
       "category": "advanced_vocabulary",
       "title": "Advanced Vocabulary",
-      "brief": "Teach 4-5 C1-C2 items that students are unlikely to have seen on typical IELTS word lists, built around one clear theme or function (e.g. verbs for describing change, hedging language, ways to concede a point, collocations with one key noun, phrasal verbs used in serious journalism, words for talking about risk). Prefer strong collocations and precise verbs over rare, showy adjectives. For each: the item in bold, meaning, register note (formal / informal / academic) where useful, and one natural example. Must not reuse Monday vocabulary. Name the exact items in the topic label.",
-      "hashtags": ["#AdvancedVocabulary", "#IELTSBand8"]
+      "brief": "Advanced Word of the Day, in EXACTLY the format and section order of the example post (Part of speech, Meaning, In simple words, Examples x3, Common collocations x3-4, Register, Uzbek, IELTS tip, Mini task). Title: 'Advanced Word of the Day: WORD' with the word (or short expression) in capitals. Choose ONE C1-C2 item that students are unlikely to know from typical IELTS word lists: a precise verb, a strong collocation or an expression used in quality journalism. The topic label must be ONLY the word or expression itself.",
+      "hashtags": [
+        "#AdvancedVocabulary",
+        "#IELTSBand8"
+      ]
     },
     "saturday": {
       "category": "ielts_reading",
       "title": "IELTS Reading Tips",
-      "brief": "Give ONE practical strategy for ONE thing: a question type (True/False/Not Given, Yes/No/Not Given, matching headings, matching information, sentence or summary completion, multiple choice, short answers) or a skill (skimming, scanning, time management, paraphrase spotting, dealing with unknown words). Include numbered steps, the most common trap, and a tiny worked example where possible.",
-      "hashtags": ["#IELTS", "#IELTSReading"]
+      "brief": "ONE practical strategy for ONE question type (True/False/Not Given, Yes/No/Not Given, matching headings, matching information, sentence or summary completion, multiple choice, short answers) or ONE skill (skimming, scanning, time management, paraphrase spotting, unknown words). Title: 'IELTS Reading Tip: NAME'. Sections: 📖 The idea (one or two lines), 🧠 In simple words, 🪜 Steps (3-4 numbered short lines), ⚠️ Common trap (one line), then Uzbek (the key idea in one line), IELTS tip, Mini task.",
+      "hashtags": [
+        "#IELTS",
+        "#IELTSReading"
+      ]
     },
     "sunday": {
       "category": "english_facts",
       "title": "Interesting English Facts",
-      "brief": "A light, fun Sunday post: ONE surprising and well-documented fact about English (word origins, odd spellings, the history of the language, numbers about English, unusual words, British vs American differences). Explain why it is so and add a quick takeaway for learners. Only use facts that are widely documented in dictionaries or linguistics references; never popular myths.",
-      "hashtags": ["#EnglishFacts", "#FunEnglish"]
+      "brief": "ONE surprising and well-documented fact about English (word origins, odd spellings, history of the language, numbers about English, unusual words, British vs American differences). Title: 'English Fact: SHORT NAME'. Sections: 🤔 Did you know? (the fact, one or two lines), 📖 Why (two or three short lines), 🗣 Examples (2-3), then Uzbek (the fact in one line), 📝 Tip for learners (replaces IELTS tip), Mini task. Only facts widely documented in dictionaries or linguistics references; never popular myths.",
+      "hashtags": [
+        "#EnglishFacts",
+        "#FunEnglish"
+      ]
     }
   }
 }

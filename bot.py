@@ -165,18 +165,17 @@ def build_prompts(cfg, day_cfg, avoid_same, avoid_other, rejected):
         "Rules for every post:",
         f'- Length: {style["min_chars"]}-{style["max_chars"]} characters. One screen, easy to skim.',
         "- First line: one emoji + a short bold title.",
-        "- Use emojis as visual bullets and section markers (roughly one per block, never rows of them).",
+        "- Use emojis as section markers (one per section label, never rows of them).",
         "- Formatting is Telegram HTML ONLY: <b>, <i>, <u>, <code>, <blockquote>. "
         "No Markdown (no ** or #), no <br>, no lists tags, no links. Use plain line breaks.",
         "- Every language point needs a natural example sentence.",
         "- Everything must be accurate, standard English. If you are not sure a fact or rule is "
         "correct, choose a different one.",
-        "- End with one short question or mini-task that invites comments.",
         "- Do NOT write hashtags inside the post; return them separately.",
         "- Do NOT mention that you are an AI, and do not greet with the weekday every time.",
     ]
     if translate:
-        system.append(f"- Add a short {translate} translation in brackets after each key word or phrase.")
+        system.append(f'- Include a "🇺🇿 Uzbek" style section: {translate}, translating the key word(s) or key idea.')
     for rule in style.get("extra_rules", []):
         system.append(f"- {rule}")
     if examples:
@@ -270,7 +269,8 @@ def clean_tag(tag):
 
 
 def normalize(topic):
-    return " ".join(re.sub(r"[^a-z0-9 ]", " ", topic.lower()).split())
+    text = " ".join(re.sub(r"[^a-z0-9 ]", " ", topic.lower()).split())
+    return re.sub(r"^(advanced )?word of the day ", "", text)
 
 
 def find_repeat(topic, past_topics, threshold):
@@ -281,6 +281,10 @@ def find_repeat(topic, past_topics, threshold):
         old = normalize(old_raw)
         if not old:
             continue
+        if min(len(new.split()), len(old.split())) <= 2:  # single words: exact match only
+            if new == old:
+                return old_raw
+            continue
         if difflib.SequenceMatcher(None, new, old).ratio() >= threshold:
             return old_raw
         old_words = set(old.split())
@@ -288,17 +292,6 @@ def find_repeat(topic, past_topics, threshold):
         if min(len(new_words), len(old_words)) >= 3 and overlap >= 0.8:
             return old_raw
     return None
-
-
-def join_line(cfg, chat_id):
-    """Footer inviting readers to join. Uses join_link from config, or the channel @username."""
-    label = cfg.get("join_text", "").strip()
-    link = cfg.get("join_link", "").strip() or (chat_id if chat_id.startswith("@") else "")
-    if not label or not link:
-        if label:
-            log("  ! no join link: channel id is not an @username and join_link is empty in config.json")
-        return ""
-    return html.escape(f"{label} {link}", quote=False)
 
 
 # ---------------------------------------------------------------- telegram
@@ -354,7 +347,9 @@ def main():
 
     same = [p["topic"] for p in posts if p["category"] == category][-150:]
     other = [p["topic"] for p in posts if p["category"] != category][-40:]
-    all_topics = [p["topic"] for p in posts]
+    seeded = [t for t in cfg.get("already_published_topics", []) if t.strip()]
+    same = seeded + same
+    all_topics = seeded + [p["topic"] for p in posts]
     threshold = cfg.get("repeat_similarity_threshold", 0.8)
 
     rejected, final = [], None
@@ -387,9 +382,8 @@ def main():
                 seen.add(t.lower())
                 hashtags.append(t)
         text = body + "\n\n" + " ".join(hashtags)
-        join = join_line(cfg, chat_id)
-        if join:
-            text += "\n\n" + join
+        if cfg.get("footer", "").strip():
+            text += "\n\n" + html.escape(cfg["footer"].strip(), quote=False)
 
         if len(text) > TELEGRAM_LIMIT:
             log(f"  ! post too long ({len(text)} chars) - asking again")

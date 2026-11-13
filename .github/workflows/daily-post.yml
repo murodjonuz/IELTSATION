@@ -12,6 +12,10 @@ on:
         description: "Preview only (prints the post in the log, does not publish)"
         type: boolean
         default: false
+      day:
+        description: "Preview another weekday (e.g. monday). Leave empty for today"
+        type: string
+        default: ""
       force:
         description: "Publish even if a post already went out today"
         type: boolean
@@ -40,6 +44,7 @@ jobs:
           python3 bot.py
           ${{ inputs.dry_run && '--dry-run' || '' }}
           ${{ inputs.force && '--force' || '' }}
+          ${{ inputs.day && format('--day {0}', inputs.day) || '' }}
 
       - name: Remember what was posted
         run: |

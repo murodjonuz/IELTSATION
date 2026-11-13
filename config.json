@@ -15,7 +15,10 @@
     "min_chars": 600,
     "max_chars": 1200,
     "translation_language": "",
-    "extra_rules": [],
+    "extra_rules": [
+      "Never promise to check, correct or reply to comments. You may invite students to write a sentence, but do not say anyone will check it.",
+      "Avoid cliche 'IELTS word list' vocabulary that every prep channel already teaches, such as: paramount, detrimental, conducive, plethora, myriad, crucial, pivotal, ubiquitous, delve, meticulous, beneficial, significant, nowadays, a double-edged sword, a piece of cake, in a nutshell, every coin has two sides. Choose fresher items that fluent writers and speakers really use: precise verbs, natural collocations, and current expressions from quality journalism."
+    ],
     "example_posts": []
   },
 
@@ -49,7 +52,7 @@
     "friday": {
       "category": "advanced_vocabulary",
       "title": "Advanced Vocabulary",
-      "brief": "Teach 4-5 C1-C2 items: sophisticated alternatives to overused words (very important, good, bad, a lot), idiomatic expressions, or precise academic words. For each: the item in bold, meaning, register note (formal / informal / academic) where useful, and one natural example. Must not reuse Monday vocabulary. Name the exact items in the topic label.",
+      "brief": "Teach 4-5 C1-C2 items that students are unlikely to have seen on typical IELTS word lists, built around one clear theme or function (e.g. verbs for describing change, hedging language, ways to concede a point, collocations with one key noun, phrasal verbs used in serious journalism, words for talking about risk). Prefer strong collocations and precise verbs over rare, showy adjectives. For each: the item in bold, meaning, register note (formal / informal / academic) where useful, and one natural example. Must not reuse Monday vocabulary. Name the exact items in the topic label.",
       "hashtags": ["#AdvancedVocabulary", "#IELTSBand8"]
     },
     "saturday": {

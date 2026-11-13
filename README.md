@@ -1,6 +1,6 @@
 # IELTSATION daily channel bot
 
-Publishes one AI-written post to your Telegram channel every day at about 09:00 Tashkent time. It runs on GitHub Actions, so there is no server and nothing to keep switched on.
+Publishes one AI-written post to your Telegram channel every day at about 20:00 Tashkent time. It runs on GitHub Actions, so there is no server and nothing to keep switched on.
 
 | Day | Category |
 |---|---|
@@ -64,7 +64,7 @@ Every published topic is saved in `history.json` with its date and category. Bef
 
 ## Good to know
 
-- GitHub often starts scheduled runs 5-20 minutes late, so posts land around 09:00, not at the exact minute.
+- GitHub often starts scheduled runs 5-20 minutes late, so posts land around 20:00, not at the exact minute.
 - If a run fails (expired key, bot removed from the channel), GitHub emails you. Nothing is posted that day; fix the cause and press **Run workflow**.
 - AI model names are retired from time to time. The bot tries several Gemini names in order; if all stop working, put a current name in `ai.model`.
 - AI can make mistakes, including in grammar explanations and "facts". Skim the channel now and then, and delete or edit a post in Telegram if one is wrong.

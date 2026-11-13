@@ -2,10 +2,11 @@ name: Daily IELTSATION post
 
 on:
   schedule:
-    # GitHub uses UTC. Tashkent is UTC+5, so 03:55 UTC = 08:55 in Tashkent.
+    # GitHub uses UTC. Tashkent is UTC+5, so 14:55 UTC = 19:55 in Tashkent.
+    # (Started 5 minutes early because GitHub usually begins scheduled runs late.)
     # To change the time: subtract 5 hours from your Tashkent time.
-    # Example: 20:00 Tashkent -> "0 15 * * *"
-    - cron: "55 3 * * *"
+    # Example: 09:00 Tashkent -> "0 4 * * *"
+    - cron: "55 14 * * *"
   workflow_dispatch:
     inputs:
       dry_run:

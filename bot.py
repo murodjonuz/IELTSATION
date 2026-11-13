@@ -46,7 +46,7 @@ def log(msg):
     print(msg, flush=True)
 
 
-def post_json(url, payload, headers=None, label="request", timeout=120):
+def post_json(url, payload, headers=None, label="request", timeout=60):
     """POST JSON, return parsed JSON. Errors never include the URL (it may hold a token)."""
     req = urllib.request.Request(
         url,
@@ -61,8 +61,8 @@ def post_json(url, payload, headers=None, label="request", timeout=120):
         err = RuntimeError(f"{label} failed: HTTP {e.code}: {body}")
         err.status = e.code
         raise err from None
-    except urllib.error.URLError as e:
-        err = RuntimeError(f"{label} failed: {e.reason}")
+    except (urllib.error.URLError, OSError) as e:  # network trouble, incl. read timeouts
+        err = RuntimeError(f"{label} failed: {getattr(e, 'reason', None) or e}")
         err.status = None
         raise err from None
 

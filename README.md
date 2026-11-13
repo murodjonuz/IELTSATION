@@ -51,7 +51,7 @@ Everything you may want to change is in `config.json`. Edit it on GitHub (pencil
 - **Writing style**: edit `style.voice`. For the closest match to your own writing, paste 2-3 of your real posts into `style.example_posts`, each as one string in quotes (use `\n` for line breaks).
 - **Uzbek or Russian translations**: set `style.translation_language` to `"Uzbek"` or `"Russian"`.
 - **Extra rules**: add sentences to `style.extra_rules`, e.g. `"Always finish with: Save this post!"`.
-- **Channel link under each post**: set `signature`, e.g. `"@yourchannel"`.
+- **Join link under each post**: every post ends with `join_text` followed by your channel @username (tappable in Telegram). To use an invite link instead, e.g. for a private channel, put it in `join_link`. Set `join_text` to `""` to remove the line.
 - **Post length**: `style.min_chars` and `style.max_chars`.
 - **Topics and hashtags for each day**: the `brief` and `hashtags` under `schedule`.
 - **Posting time**: the `cron` line in `.github/workflows/daily-post.yml`. It is in UTC, so subtract 5 hours from Tashkent time.

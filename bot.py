@@ -296,6 +296,17 @@ def find_repeat(topic, past_topics, threshold):
     return None
 
 
+def join_line(cfg, chat_id):
+    """Footer inviting readers to join. Uses join_link from config, or the channel @username."""
+    label = cfg.get("join_text", "").strip()
+    link = cfg.get("join_link", "").strip() or (chat_id if chat_id.startswith("@") else "")
+    if not label or not link:
+        if label:
+            log("  ! no join link: channel id is not an @username and join_link is empty in config.json")
+        return ""
+    return html.escape(f"{label} {link}", quote=False)
+
+
 # ---------------------------------------------------------------- telegram
 
 def send_to_telegram(token, chat_id, text):
@@ -376,8 +387,9 @@ def main():
                 seen.add(t.lower())
                 hashtags.append(t)
         text = body + "\n\n" + " ".join(hashtags)
-        if cfg.get("signature", "").strip():
-            text += "\n\n" + html.escape(cfg["signature"].strip(), quote=False)
+        join = join_line(cfg, chat_id)
+        if join:
+            text += "\n\n" + join
 
         if len(text) > TELEGRAM_LIMIT:
             log(f"  ! post too long ({len(text)} chars) - asking again")

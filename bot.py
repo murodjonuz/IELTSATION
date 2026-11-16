@@ -296,17 +296,30 @@ def find_repeat(topic, past_topics, threshold):
 
 # ---------------------------------------------------------------- telegram
 
+def telegram_call(url, payload):
+    """Send to Telegram, retrying when the connection drops or Telegram is briefly down."""
+    for attempt in range(1, 5):
+        try:
+            return post_json(url, payload, label="Telegram")
+        except RuntimeError as e:
+            status = getattr(e, "status", None)
+            if attempt == 4 or not (status is None or status == 429 or status >= 500):
+                raise
+            log(f"  ! {e} - retrying in 15s")
+            time.sleep(15)
+
+
 def send_to_telegram(token, chat_id, text):
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     base = {"chat_id": chat_id, "link_preview_options": {"is_disabled": True}}
     try:
-        data = post_json(url, {**base, "text": text, "parse_mode": "HTML"}, label="Telegram")
+        data = telegram_call(url, {**base, "text": text, "parse_mode": "HTML"})
     except RuntimeError as e:
         if getattr(e, "status", None) != 400 or "parse" not in str(e).lower():
             raise
         log("  ! Telegram rejected the formatting; sending as plain text instead")
         plain = html.unescape(re.sub(r"</?[a-z-]+>", "", text))
-        data = post_json(url, {**base, "text": plain}, label="Telegram")
+        data = telegram_call(url, {**base, "text": plain})
     return data["result"]["message_id"]
 
 
@@ -317,6 +330,8 @@ def main():
     ap.add_argument("--dry-run", action="store_true", help="generate and print only")
     ap.add_argument("--force", action="store_true", help="post even if already posted today")
     ap.add_argument("--day", choices=DAYS, help="override the weekday")
+    ap.add_argument("--wait", action="store_true",
+                    help="scheduled mode: publish exactly at post_time (wait for it, or quit if it is too far away)")
     args = ap.parse_args()
 
     cfg = load_json(CONFIG_PATH, None)
@@ -335,6 +350,17 @@ def main():
     if not args.dry_run and not args.force and any(p["date"] == today for p in posts):
         log("Already posted today - nothing to do. (Use --force to post again.)")
         return
+
+    target = None
+    if args.wait and not args.dry_run:
+        hh, mm = (int(x) for x in cfg.get("post_time", "20:00").split(":"))
+        target = now.replace(hour=hh, minute=mm, second=0, microsecond=0)
+        minutes_left = (target - now).total_seconds() / 60
+        if minutes_left > cfg.get("max_wait_minutes", 320):
+            log(f"Too early: {minutes_left:.0f} min until {target:%H:%M}. A later run will handle today.")
+            return
+        log(f"Post time is {target:%H:%M}; now {now:%H:%M}." if minutes_left > 0
+            else f"Post time {target:%H:%M} has passed; publishing straight away.")
 
     ai_key = os.environ.get("AI_API_KEY", "").strip()
     token = os.environ.get("TELEGRAM_BOT_TOKEN", "").strip()
@@ -400,6 +426,12 @@ def main():
     if args.dry_run:
         log("Dry run - not published, history unchanged.")
         return
+
+    if target is not None:
+        tz = now.tzinfo
+        while (left := (target - datetime.now(tz)).total_seconds()) > 0:
+            log(f"Post is ready. Waiting {left / 60:.0f} min until {target:%H:%M}...")
+            time.sleep(min(left, 900))
 
     message_id = send_to_telegram(token, chat_id, text)
     posts.append({"date": today, "day": day, "category": category, "topic": topic, "message_id": message_id})

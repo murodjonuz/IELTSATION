@@ -2,11 +2,13 @@ name: Daily IELTSATION post
 
 on:
   schedule:
-    # GitHub uses UTC. Tashkent is UTC+5, so 14:55 UTC = 19:55 in Tashkent.
-    # (Started 5 minutes early because GitHub usually begins scheduled runs late.)
-    # To change the time: subtract 5 hours from your Tashkent time.
-    # Example: 09:00 Tashkent -> "0 4 * * *"
-    - cron: "55 14 * * *"
+    # The posting time is set in config.json ("post_time", Tashkent time) - NOT here.
+    # GitHub starts scheduled runs hours late, so several runs are started during
+    # the day. The first one that begins within about 5 hours of post_time prepares
+    # the post, waits, and publishes exactly on time; the others see it and quit.
+    # Times below are UTC (Tashkent 09:07, 11:07, 13:07, 15:07, 17:07, 18:37, 19:37).
+    - cron: "7 4,6,8,10,12 * * *"
+    - cron: "37 13,14 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -32,7 +34,7 @@ concurrency:
 jobs:
   post:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 355
     steps:
       - uses: actions/checkout@v4
 
@@ -44,6 +46,7 @@ jobs:
         run: >
           python3 bot.py
           ${{ inputs.dry_run && '--dry-run' || '' }}
+          ${{ github.event_name == 'schedule' && '--wait' || '' }}
           ${{ inputs.force && '--force' || '' }}
           ${{ inputs.day && format('--day {0}', inputs.day) || '' }}
 

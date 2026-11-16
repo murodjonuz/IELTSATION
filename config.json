@@ -2,6 +2,8 @@
   "channel_name": "IELTSATION",
   "audience": "IELTS candidates and English learners in Uzbekistan, mostly teenagers and young adults at B1-C1 level aiming for band 6.5-8.",
   "utc_offset_hours": 5,
+  "post_time": "20:00",
+  "max_wait_minutes": 320,
   "footer": "@ieltsation",
   "already_published_topics": [
     "scarce"

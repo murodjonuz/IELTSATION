@@ -55,7 +55,7 @@ Everything you may want to change is in `config.json`. Edit it on GitHub (pencil
 - **Words you already posted before the bot**: add them to `already_published_topics` so they are never repeated.
 - **Post length**: `style.min_chars` and `style.max_chars`.
 - **Topics and hashtags for each day**: the `brief` and `hashtags` under `schedule`.
-- **Posting time**: the `cron` line in `.github/workflows/daily-post.yml`. It is in UTC, so subtract 5 hours from Tashkent time.
+- **Posting time**: `post_time` in `config.json` (Tashkent time, e.g. `"20:00"`). Do not change the `cron` lines in the workflow; they only start the bot early so it can wait for the exact time.
 - **AI provider**: set `ai.provider` to `gemini`, `openai` or `anthropic`, and `ai.model` to that provider's model name. `openai` also works with Groq or OpenRouter if you set `ai.base_url`.
 
 ## How it avoids repeats
@@ -64,7 +64,7 @@ Every published topic is saved in `history.json` with its date and category. Bef
 
 ## Good to know
 
-- GitHub often starts scheduled runs 5-20 minutes late, so posts land around 20:00, not at the exact minute.
+- GitHub starts scheduled runs late, sometimes by hours. The bot therefore starts several times a day, prepares the post early, and waits until `post_time` to publish. Pressing **Run workflow** by hand publishes immediately.
 - If a run fails (expired key, bot removed from the channel), GitHub emails you. Nothing is posted that day; fix the cause and press **Run workflow**.
 - AI model names are retired from time to time. The bot tries several Gemini names in order; if all stop working, put a current name in `ai.model`.
 - AI can make mistakes, including in grammar explanations and "facts". Skim the channel now and then, and delete or edit a post in Telegram if one is wrong.
